@@ -3,7 +3,7 @@ create database pizza_restaurant;
 use pizza_restaurant;
 
 create table `customer`(
-customer_id int not null,
+customer_id int not null auto_increment,
 customer_firstname varchar(50),
 customer_lastname varchar(50),
 customer_phone varchar(50),
@@ -11,7 +11,7 @@ primary key customer_id(customer_id)
 );
 
 create table `orders`(
-order_id int not null,
+order_id int not null auto_increment,
 order_timestamp timestamp not null,
 primary key order_id (order_id)
 );
@@ -33,7 +33,7 @@ foreign key(order_id) references orders (order_id)
 create table `pizza_orders`(
 pizza_id int not null,
 order_id int not null,
-quantity int not null,
+quantity int not null default 1,
 foreign key(pizza_id) references pizza(pizza_id),
 foreign key(order_id) references orders(order_id)
 );
