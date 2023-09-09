@@ -79,6 +79,16 @@ insert into `customer_orders`(customer_id, order_id)
     
 insert into `pizza_orders`(pizza_id, order_id, quantity)
 	values(3,3,1),(4,3,1);
+    
+-- testing bonus 4th order added from code review
+insert into `orders`(order_timestamp)
+	values('2014-10-9 10:47:00');
+    
+insert into `customer_orders`(customer_id, order_id) 
+	values(1,4);
+    
+insert into `pizza_orders`(pizza_id, order_id, quantity)
+	values(3,3,2),(4,3,2);
 
 -- Q4 task
 select c.customer_id, customer_name, SUM(po.quantity * p.pizza_price) AS total_spent
@@ -90,11 +100,12 @@ select c.customer_id, customer_name, SUM(po.quantity * p.pizza_price) AS total_s
         group by c.customer_id;
 
 -- Q5 task
-select c.customer_id, customer_name, order_timestamp, SUM(po.quantity * p.pizza_price) AS total_spent
+select c.customer_id, customer_name, convert(o.order_timestamp, date) as order_date,
+ SUM(po.quantity * p.pizza_price) AS total_spent
 	from `customer_orders` co
         join `customer` c on co.customer_id = c.customer_id
         join `orders` o on o.order_id = co.order_id
         join `pizza_orders` po on po.order_id = po.order_id
         join `pizza` p on po.pizza_id = p.pizza_id
-        group by c.customer_id, o.order_timestamp
+        group by c.customer_id, order_date
         order by c.customer_id;
